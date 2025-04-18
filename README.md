@@ -1,34 +1,42 @@
-# AstroNvim Template
+<p align="center">
+  <img src="https://raw.githubusercontent.com/AstroNvim/AstroNvim/main/assets/logo.svg" height="80"/>
+</p>
 
-**NOTE:** This is for AstroNvim v5+
+# Neovim Config
 
-A template for getting started with [AstroNvim](https://github.com/AstroNvim/AstroNvim)
+<p align="center"><i>My AstroNvim config, streamlined for Go development, testing, session management, and fast file access.</i></p>
 
-## 🛠️ Installation
+---
 
-#### Make a backup of your current nvim and shared folder
+## ✨ Features
 
-```shell
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
-mv ~/.local/state/nvim ~/.local/state/nvim.bak
-mv ~/.cache/nvim ~/.cache/nvim.bak
-```
+- 🧠 **AstroNvim** base with first-class Lua ergonomics and plugin structure
+- 🦫 **Go development**: `gopls`, `goimports`, `gofumpt`, debugging via DAP with `delve`
+- ✅ **Neotest** for a clean, integrated test runner
+- 📁 **Harpoon v2** with Telescope support for quick file jumping
+- 💾 **resession.nvim** for project-aware session management
+- 🌌 **TokyoNight** theme with full plugin integration
+- 🔎 Telescope fuzzy finding for everything
+- 🔑 Keymaps auto-exported to [keymaps.md](./keymaps.md)
 
-#### Create a new user repository from this template
+---
 
-Press the "Use this template" button above to create a new repository to store your user configuration.
+## 🔌 Notable Plugins
 
-You can also just clone this repository directly if you do not want to track your user configuration in GitHub.
+| Plugin                             | Purpose                                  |
+|------------------------------------|------------------------------------------|
+| [`neotest`](https://github.com/nvim-neotest/neotest) | Test runner with output panel and summary |
+| [`harpoon@harpoon2`](https://github.com/ThePrimeagen/harpoon/tree/harpoon2) | Fast, persistent file access list         |
+| [`resession.nvim`](https://github.com/stevearc/resession.nvim) | Project-based session management          |
+| [`tokyonight.nvim`](https://github.com/folke/tokyonight.nvim) | Beautiful dark color scheme               |
+| Built-in DAP + `nvim-dap-ui`       | Debugging support                         |
 
-#### Clone the repository
+---
 
-```shell
-git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim
-```
+## 🛠 Setup
 
-#### Start Neovim
+Clone AstroNvim:
 
-```shell
-nvim
-```
+```bash
+git clone https://github.com/brian-abo/nvim ~/.config/nvim
+
