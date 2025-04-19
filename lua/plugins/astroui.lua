@@ -9,5 +9,8 @@ return {
   ---@type AstroUIOpts
   opts = {
     colorscheme = "tokyonight",
+    icons = {
+      AstroLogo = "",
+    }
   },
 }
