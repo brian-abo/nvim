@@ -2,6 +2,7 @@
 return {
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    lazy = false,
     opts = {
       -- Make sure to use the names found in `:Mason`
       ensure_installed = {
@@ -16,6 +17,9 @@ return {
 
         -- Debuggers
         "delve",
+
+        -- Diagnostics
+        "shellcheck",
 
         -- Other
         "tree-sitter-cli",

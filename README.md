@@ -35,8 +35,16 @@
 
 ## 🛠 Setup
 
+Dependencies:
+- python3
+- pip
+- fd-find
+- imagemagick
+
 Clone AstroNvim:
 
 ```bash
 git clone https://github.com/brian-abo/nvim ~/.config/nvim
+```
+
 
