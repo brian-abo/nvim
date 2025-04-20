@@ -18,9 +18,6 @@ return {
         -- Debuggers
         "delve",
 
-        -- Diagnostics
-        "shellcheck",
-
         -- Other
         "tree-sitter-cli",
       },
