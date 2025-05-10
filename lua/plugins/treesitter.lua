@@ -6,6 +6,7 @@ return {
       "go",
       "gomod",
       "gosum",
+      "gowork",
       "bash",
       "make",
       "yaml",

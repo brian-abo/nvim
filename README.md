@@ -17,7 +17,6 @@
 - 💾 **resession.nvim** for project-aware session management
 - 🌌 **TokyoNight** theme with full plugin integration
 - 🔎 Telescope fuzzy finding for everything
-- 🔑 Keymaps auto-exported to [keymaps.md](./keymaps.md)
 
 ---
 
