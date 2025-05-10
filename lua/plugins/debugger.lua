@@ -8,24 +8,25 @@ return {
       "leoluz/nvim-dap-go",
     },
     config = function()
-      local core = require "astrocore"
-      local dap = require "dap"
-      local dapui = require "dapui"
+      local core = require("astrocore")
+      local dap = require("dap")
+      local dapui = require("dapui")
       dapui.setup()
 
       dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
       dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
       dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 
-      require("dap-go").dapgo.setup()
+      require("dap-go").setup()
 
-      require("mason-nvim-dap").setup {
+      require("mason-nvim-dap").setup({
         ensure_installed = { "delve" },
         automatic_installation = false,
-      }
+      })
 
       local leader = "<leader>"
-      core.set_mappings {
+
+      core.set_mappings({
         n = {
           [leader .. "D"] = { desc = "Debug" },
           [leader .. "Db"] = { function() dap.toggle_breakpoint() end, desc = "Toggle breakpoint" },
@@ -44,10 +45,10 @@ return {
           [leader .. "Ds"] = { function() dap.session() end, desc = "Session" },
           [leader .. "Dt"] = { function() dap.terminate() end, desc = "Terminate" },
           [leader .. "Dw"] = { function() dap.hover() end, desc = "Widgets" },
-          [leader .. "Du"] = { function() dapui.toggle {} end, "Toggle UI" },
+          [leader .. "Du"] = { function() dapui.toggle({}) end, "Toggle UI" },
           [leader .. "De"] = { function() dapui.eval() end, "Evaluate" },
         },
-      }
+      })
     end,
   },
   { "theHamsta/nvim-dap-virtual-text", opts = {} },
