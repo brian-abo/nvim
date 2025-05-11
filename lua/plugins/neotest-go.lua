@@ -1,31 +1,30 @@
 ---@type LazySpec
 return {
   "nvim-neotest/neotest",
+  event = "VeryLazy",
   dependencies = {
-    "nvim-neotest/neotest-go",
+    "fredrikaverpil/neotest-golang",
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "nvim-neotest/nvim-nio",
+    "antoinemadec/FixCursorHold.nvim",
     "andythigpen/nvim-coverage",
   },
   opts = function(_, opts)
-    local core = require("astrocore")
-    local neotest = require("neotest")
-    local coverage = require("coverage")
-
-    opts.adapters = opts.adapters or {}
-    table.insert(
-      opts.adapters,
-      neotest({
-        args = { "-coverprofile=" .. vim.fn.getcwd() .. "coverage.out" },
-        experimental = {
-          test_table = true,
-        },
-      })
-    )
+    opts.adapters = {
+      require("neotest-golang")({
+        dap = { justMyCode = false },
+        args = { "-v", "-race", "-coverprofile=coverage.out" },
+      }),
+    }
 
     opts.log_level = vim.log.levels.DEBUG
+  end,
+  config = function(_, opts)
+    local neotest = require("neotest")
+    local core = require("astrocore")
+
     neotest.setup(opts)
-    coverage.setup({ auto_reload = true })
 
     local leader = "<leader>"
     core.set_mappings({
@@ -33,10 +32,7 @@ return {
         [leader .. "T"] = { desc = "Test" },
         [leader .. "TA"] = { function() neotest.run.attach() end, desc = "Attach" },
         [leader .. "Ta"] = {
-          function()
-            print("Calling neotest.run.run with cwd:", vim.uv.cwd())
-            neotest.run(vim.uv.cwd())
-          end,
+          function() neotest.run.run(vim.fn.getcwd()) end,
           desc = "All files",
         },
         [leader .. "TD"] = {
@@ -48,7 +44,7 @@ return {
           desc = "Debug nearest test",
         },
         [leader .. "Tf"] = { function() neotest.run.run(vim.fn.expand("%")) end, desc = "Current file" },
-        [leader .. "Tn"] = { function() neotest.run() end, desc = "Nearest" },
+        [leader .. "Tn"] = { function() neotest.run.run() end, desc = "Nearest" },
         [leader .. "TO"] = { function() neotest.output_panel.toggle() end, desc = "Toggle output" },
         [leader .. "To"] = {
           function() neotest.output.open({ enter = true, auto_close = true }) end,
@@ -58,16 +54,6 @@ return {
         [leader .. "TS"] = { function() neotest.summary.toggle() end, desc = "Toggle summary" },
         [leader .. "Ts"] = { function() neotest.run.run({ suite = true }) end, desc = "Suite" },
         [leader .. "Tt"] = { function() neotest.run.stop() end, desc = "Terminate" },
-        [leader .. "C"] = { desc = "Toggle coverage" },
-        [leader .. "Ct"] = {
-          function()
-            coverage.load(true)
-            coverage.toggle()
-          end,
-          desc = "Toggle",
-        },
-        [leader .. "Cx"] = { function() coverage.clear() end, desc = "Clear" },
-        [leader .. "Cs"] = { function() coverage.summary() end, desc = "Summary" },
       },
     })
   end,
