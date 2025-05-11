@@ -6,12 +6,15 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 return {
   -- Function template
-  s("fn", fmt("func {}({}) {} {{\n\t{}\n}}", {
-    i(1, "name"),
-    i(2),
-    i(3),
-    i(0),
-  })),
+  s(
+    "fn",
+    fmt("func {}({}) {} {{\n\t{}\n}}", {
+      i(1, "name"),
+      i(2),
+      i(3),
+      i(0),
+    })
+  ),
 
   -- Error check
   s("ife", {
@@ -27,4 +30,3 @@ return {
     t({ "", "}()" }),
   }),
 }
-

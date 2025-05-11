@@ -11,10 +11,11 @@ return {
         "gotests",
         "iferr",
         "impl",
-        "goimports",
         "delve",
         "tree-sitter-cli",
       },
+      auto_update = true,
+      run_on_start = true,
     },
   },
 }

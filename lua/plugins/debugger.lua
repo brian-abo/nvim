@@ -45,8 +45,8 @@ return {
           [leader .. "Ds"] = { function() dap.session() end, desc = "Session" },
           [leader .. "Dt"] = { function() dap.terminate() end, desc = "Terminate" },
           [leader .. "Dw"] = { function() dap.hover() end, desc = "Widgets" },
-          [leader .. "Du"] = { function() dapui.toggle({}) end, "Toggle UI" },
-          [leader .. "De"] = { function() dapui.eval() end, "Evaluate" },
+          [leader .. "Du"] = { function() dapui.toggle({}) end, desc = "Toggle UI" },
+          [leader .. "De"] = { function() dapui.eval() end, desc = "Evaluate" },
         },
       })
     end,

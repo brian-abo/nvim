@@ -8,12 +8,12 @@ return {
     },
     build = "make tiktoken",
     opts = function(_, opts)
-      local core = require "astrocore"
+      local core = require("astrocore")
       local leader = "<leader>"
 
       opts.show_help = true
 
-      core.set_mappings {
+      core.set_mappings({
         n = {
           [leader .. "a"] = { desc = "AI Tools" },
           [leader .. "ao"] = { "<cmd>CopilotChatOpen<cr>", desc = "Open chat" },
@@ -25,7 +25,7 @@ return {
           [leader .. "am"] = { "<cmd>CopilotChatModels<cr>", desc = "View/select available models" },
           [leader .. "aa"] = { "<cmd>CopilotChatAgents<cr>", desc = "View/select available agents" },
         },
-      }
+      })
     end,
   },
 }

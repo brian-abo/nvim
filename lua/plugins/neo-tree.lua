@@ -10,4 +10,3 @@ return {
     opts.window.mappings["f/"] = nil
   end,
 }
-

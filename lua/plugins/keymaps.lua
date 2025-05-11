@@ -19,7 +19,7 @@ return {
     "AstroNvim/astrocore",
     ---@param opts AstroCoreOpts
     opts = function(_, opts)
-      local core = require "astrocore"
+      local core = require("astrocore")
       local buffer = require("astrocore.buffer")
       local heirline = require("astroui.status.heirline")
       opts.mappings = core.extend_tbl(opts.mappings, {
@@ -28,9 +28,7 @@ return {
           ["[b"] = { function() buffer.nav(-vim.v.count1) end, desc = "Previous buffer" },
           ["<Leader>bd"] = {
             function()
-              heirline.buffer_picker(
-                function(bufnr) buffer.close(bufnr) end
-              )
+              heirline.buffer_picker(function(bufnr) buffer.close(bufnr) end)
             end,
             desc = "Close buffer from tabline",
           },
@@ -42,7 +40,7 @@ return {
     "AstroNvim/astrolsp",
     ---@param opts AstroLSPOpts
     opts = function(_, opts)
-      local core = require "astrocore"
+      local core = require("astrocore")
       opts.mappings = core.extend_tbl(opts.mappings, {
         n = {
           K = {
@@ -60,12 +58,10 @@ return {
               require("astrolsp.toggles").buffer_semantic_tokens(bufnr)
             end,
             desc = "Toggle semantic tokens",
-            cond = function(client)
-              return client.supports_method "textDocument/semanticTokens/full"
-            end,
+            cond = function(client) return client.supports_method("textDocument/semanticTokens/full") end,
           },
         },
       })
     end,
-  }
+  },
 }
