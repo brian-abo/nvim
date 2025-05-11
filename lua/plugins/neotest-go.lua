@@ -15,7 +15,7 @@ return {
     opts.adapters = opts.adapters or {}
     table.insert(
       opts.adapters,
-      require("neotest-go")({
+      neotest({
         args = { "-coverprofile=" .. vim.fn.getcwd() .. "coverage.out" },
         experimental = {
           test_table = true,
@@ -23,6 +23,8 @@ return {
       })
     )
 
+    opts.log_level = vim.log.levels.DEBUG
+    neotest.setup(opts)
     coverage.setup({ auto_reload = true })
 
     local leader = "<leader>"
@@ -30,7 +32,13 @@ return {
       n = {
         [leader .. "T"] = { desc = "Test" },
         [leader .. "TA"] = { function() neotest.run.attach() end, desc = "Attach" },
-        [leader .. "Ta"] = { function() neotest.run(vim.uv.cwd()) end, desc = "All files" },
+        [leader .. "Ta"] = {
+          function()
+            print("Calling neotest.run.run with cwd:", vim.uv.cwd())
+            neotest.run(vim.uv.cwd())
+          end,
+          desc = "All files",
+        },
         [leader .. "TD"] = {
           function() neotest.run.run({ vim.fn.expand("%"), strategy = "dap", suite = false }) end,
           desc = "Debug current file",

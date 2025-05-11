@@ -27,6 +27,5 @@ return {
       default = { "lsp", "path", "snippets", "buffer" },
     },
     signature = { enabled = false },
-    documentation = { auto_show = false },
   },
 }
