@@ -32,7 +32,19 @@ return {
       },
     },
     config = {
-      lua_ls = { settings = { Lua = { hint = { enable = true, arrayIndex = "Disable" } } } },
+      lua_ls = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "Snacks" },
+            },
+            hint = {
+              enable = true,
+              arrayIndex = "Disable",
+            },
+          },
+        },
+      },
       gopls = {
         settings = {
           gopls = {

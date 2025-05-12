@@ -5,18 +5,12 @@ return {
   dependencies = {
     { "nvim-lua/plenary.nvim" },
     { "folke/which-key.nvim" },
-    { "nvim-telescope/telescope.nvim" },
+    { "folke/snacks.nvim" },
   },
 
   opts = function(_, opts)
     local core = require("astrocore")
     local harpoon = require("harpoon")
-    local conf = require("telescope.config").values
-    local pickers = require("telescope.pickers")
-    local finders = require("telescope.finders")
-    local actions = require("telescope.actions")
-    local action_state = require("telescope.actions.state")
-    local list = harpoon:list()
     local leader = "<Leader><Leader>"
 
     opts.settings = {
@@ -26,41 +20,53 @@ return {
 
     harpoon:setup()
 
-    local function toggle_telescope(harpoon_list)
-      local file_paths = {}
+    local function normalize_list(t)
+      local reordered = {}
 
-      for i, item in ipairs(harpoon_list.items) do
-        table.insert(file_paths, string.format("%d. %s", i, item.value))
+      for _, v in pairs(t) do
+        if v ~= nil then table.insert(reordered, v) end
       end
 
-      pickers
-        .new({}, {
-          prompt_title = "Harpoon",
-          finder = finders.new_table({
-            results = file_paths,
-          }),
-          previewer = conf.file_previewer({}),
-          sorter = conf.generic_sorter({}),
-
-          attach_mappings = function(_, map)
-            map("i", "<CR>", function(prompt_bufnr)
-              local selection = action_state.get_selected_entry()
-              actions.close(prompt_bufnr)
-
-              local path = selection[1]:match("^%d+%. (.*)$") or selection[1]
-              vim.cmd("edit " .. vim.fn.fnameescape(path))
-            end)
-            return true
-          end,
-        })
-        :find()
+      return reordered
     end
 
     core.set_mappings({
       n = {
         [leader] = { desc = "Harpoon" },
-        [leader .. "e"] = { function() harpoon.ui:toggle_quick_menu(list) end, desc = "Toggle UI" },
-        [leader .. "t"] = { function() toggle_telescope(list) end, desc = "Toggle UI" },
+        [leader .. "o"] = {
+          function()
+            require("snacks").picker({
+              on_show = function() vim.cmd.stopinsert() end,
+              finder = function()
+                local file_paths = {}
+                local list = normalize_list(harpoon:list().items)
+                for _, item in ipairs(list) do
+                  table.insert(file_paths, { text = item.value, file = item.value })
+                end
+
+                return file_paths
+              end,
+
+              win = {
+                input = {
+                  keys = { ["dd"] = { "harpoon_delete", mode = { "n", "x" } } },
+                },
+                list = {
+                  keys = { ["dd"] = { "harpoon_delete", mode = { "n", "x" } } },
+                },
+              },
+              actions = {
+                harpoon_delete = function(picker, item)
+                  local to_remove = item or picker:selected()
+                  harpoon:list():remove({ value = to_remove.text })
+                  harpoon:list().items = normalize_list(harpoon:list().items)
+                  picker:find({ refresh = true })
+                end,
+              },
+            })
+          end,
+          desc = "Toggle UI",
+        },
         [leader .. "a"] = { function() harpoon:list():add() end, desc = "Add file" },
         [leader .. "n"] = { function() harpoon:list():next() end, desc = "Next" },
         [leader .. "p"] = { function() harpoon:list():prev() end, desc = "Previous" },

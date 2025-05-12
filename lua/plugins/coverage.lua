@@ -21,6 +21,11 @@ return {
       desc = "Toggle coverage",
     },
     {
+      "<leader>Tl",
+      function() require("coverage").load(true) end,
+      desc = "Toggle coverage",
+    },
+    {
       "<leader>Tx",
       function() require("coverage").clear() end,
       desc = "Clear coverage",
