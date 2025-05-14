@@ -23,7 +23,7 @@ return {
     {
       "<leader>Tl",
       function() require("coverage").load(true) end,
-      desc = "Toggle coverage",
+      desc = "Load coverage",
     },
     {
       "<leader>Tx",
