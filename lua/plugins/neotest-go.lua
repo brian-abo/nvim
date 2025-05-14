@@ -3,7 +3,14 @@ return {
   "nvim-neotest/neotest",
   event = "VeryLazy",
   dependencies = {
-    "fredrikaverpil/neotest-golang",
+    {
+      "fredrikaverpil/neotest-golang",
+      dependencies = {
+        "leoluz/nvim-dap-go",
+        opts = {},
+      },
+      branch = "main",
+    },
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     "nvim-neotest/nvim-nio",
@@ -14,7 +21,10 @@ return {
     opts.adapters = {
       require("neotest-golang")({
         dap = { justMyCode = false },
-        args = { "-v", "-race", "-coverprofile=coverage.out" },
+        go_test_args = {
+          "-v",
+          "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+        },
       }),
     }
 
